@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: greenops-router-job
+spec:
+  # This standard cron syntax tells it to run every 5 minutes
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: router
+            image: greenops-router:v1
+            # This tells Kubernetes NOT to look on the internet for the image
+            imagePullPolicy: IfNotPresent 
+          restartPolicy: OnFailure

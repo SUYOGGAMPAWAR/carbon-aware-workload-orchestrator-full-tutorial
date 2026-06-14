@@ -226,6 +226,8 @@ export GITHUB_TOKEN="ghp_yourTokenHere"
 
 > Set this in **every new terminal session** you use to run the script — it doesn't persist automatically.
 
+> 🔑 **About `ghp_yourTokenHere`:** Every place in this README that shows `ghp_yourTokenHere` — and the `YOUR_TOKEN_GOES_HERE_LOCALLY` default inside `carbon_router.py` — is a **placeholder**, not a bug. It's deliberate stand-in text for *your* real PAT from Step 4.3. Swapping it out is a normal configuration step, not something "broken" the way the missing `import os` line is. If you copy-paste a command with the placeholder left in, GitHub will correctly reject it with `Bad credentials` — that's expected behavior, not a sign anything is wrong with the project.
+
 ---
 
 ### Step 4.8 — Run the orchestrator locally 🎉
@@ -354,7 +356,7 @@ If you connect this fork to a real cluster with ArgoCD/Flux watching it, those r
 |---|---|---|
 | `'choco' is not recognized as an internal or external command` | Chocolatey installed/run from a **non-admin** PowerShell window | Re-open PowerShell **as Administrator**, reinstall Chocolatey, then open a fresh admin terminal |
 | `NameError: name 'os' is not defined` | `import os` is missing from `carbon_router.py` | Add `import os` at the top of the file (Step 4.5) |
-| `github.GithubException.BadCredentialsException: 401 {"message": "Bad credentials"}` | Token is wrong, expired, or `GITHUB_TOKEN` env var wasn't set in this terminal | Re-generate a PAT (Step 4.3) and re-export it (Step 4.7) in the **same terminal** you run the script from |
+| `github.GithubException.BadCredentialsException: 401 {"message": "Bad credentials"}` | Token is wrong, expired, `GITHUB_TOKEN` wasn't set in this terminal — **or** the placeholder `ghp_yourTokenHere`/`YOUR_TOKEN_GOES_HERE_LOCALLY` was left in place instead of your real PAT (expected, not a code bug) | Re-generate a PAT (Step 4.3) and re-export your **real token** (Step 4.7) in the **same terminal** you run the script from |
 | `403 {"message": "Resource not accessible by personal access token"}` | Your token doesn't have the `repo` scope, or `REPO_NAME` still points to someone else's repo | Recheck the `repo` scope when creating the token, and confirm `REPO_NAME` matches **your fork** |
 | `ModuleNotFoundError: No module named 'github'` or `'yaml'` | Dependencies not installed, or installed outside your virtual environment | Activate your venv (Step 4.6), then `pip install PyGithub pyyaml` |
 | `Cannot connect to the Docker daemon at unix:///var/run/docker.sock` (or similar on Windows) | Docker Desktop isn't running | Open/start Docker Desktop and wait until it shows "Running", then retry |
